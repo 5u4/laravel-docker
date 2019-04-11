@@ -1,0 +1,28 @@
+# System
+.DS_Store
+.vscode
+.idea
+
+# Laravel
+laravel
+app
+bootstrap
+config
+database
+public
+resources
+routes
+storage
+tests
+vendor
+.editorconfig
+.env
+.env.example
+.gitattributes
+artisan
+composer.json
+composer.lock
+package.json
+phpunit.xml
+server.php
+webpack.mix.js
