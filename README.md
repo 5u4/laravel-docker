@@ -1,45 +1,73 @@
 # Laravel + Docker
 
-1. Create a container that has composer and initialize a laravel project
+## Set up Laravel project
+
+You can either create a new Laravel project or move the [Dockerfile](Dockerfile) and [docker-compose.yml](docker-compose.yml) to the existing project.
+
+### Create a new Laravel project
+
+-   Create a container that has composer and initialize a laravel project
 
 ```bash
-docker run -it --rm -v $(PWD):/data -d composer sh -c "cd /data && composer create-project --prefer-dist laravel/laravel laravel"
+docker run -it --rm -v $(PWD):/data composer \
+    sh -c "cd /data && composer create-project --prefer-dist laravel/laravel laravel"
 ```
 
-2. Move laravel project to the same directory as Docker files
+-   Move laravel project to the same directory as Docker files
 
 ```bash
 bash -c "shopt -s dotglob && mv -n ./laravel/* ."
 ```
 
-3. Docker compose
+NOTE: Or you can move all files and folders (including hidden files) from the newly created folder `laravel` to the folder where contains [Dockerfile](Dockerfile) and [docker-compose.yml](docker-compose.yml).
 
-```bash
-docker-compose up --build -d
-```
+### Apply to an existing project
 
-The site is now on http://localhost:8000/
+-   Copy [Dockerfile](Dockerfile) and [docker-compose.yml](docker-compose.yml) and paste to the existing Laravel project.
 
-4. Connect database
+## Set up environments
 
-Edit `.env` file to connect database
+Edit `.env` database connection credentials
 
 ```
 DB_CONNECTION=mysql
 DB_HOST=database
 DB_PORT=3306
-DB_DATABASE=exampledb
-DB_USERNAME=exampleuser
-DB_PASSWORD=examplepassword
+DB_ROOT_PASS=secure_root_password
+DB_DATABASE=example_database
+DB_USERNAME=example_user
+DB_PASSWORD=example_password
 ```
 
-5. Open shell in container
+NOTE: This step should be done before running `docker-compose`, since Docker will create MySQL from the environment variables.
+
+## Server commands
+
+### Build docker image
+
+```bash
+docker-compose build
+```
+
+NOTE: You only need to build at the first time or when [Dockerfile](Dockerfile) changes.
+
+### Start server
+
+```bash
+docker-compose up -d
+```
+
+The site will be on http://localhost:8000/.
+
+### Execute commands in container
 
 ```bash
 docker-compose exec app sh
 ```
 
-6. Stop docker compose
+NOTE: If you have `php` / `composer` locally, you can run `php` / `composer` commands locally without shell into container.
+
+### Stop server
 
 ```bash
 docker-compose down
