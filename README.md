@@ -20,13 +20,26 @@ docker-compose up --build -d
 
 The site is now on http://localhost:8000/
 
-4. Open shell in container
+4. Connect database
+
+Edit `.env` file to connect database
+
+```
+DB_CONNECTION=mysql
+DB_HOST=database
+DB_PORT=3306
+DB_DATABASE=exampledb
+DB_USERNAME=exampleuser
+DB_PASSWORD=examplepassword
+```
+
+5. Open shell in container
 
 ```bash
 docker-compose exec app sh
 ```
 
-5. Stop docker compose
+6. Stop docker compose
 
 ```bash
 docker-compose down

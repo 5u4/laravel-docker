@@ -7,9 +7,9 @@ services:
     ports:
       - 8000:8000
     links:
-      - mysql
-  mysql:
-    image: mysql
+      - database
+  database:
+    image: mariadb
     ports:
       - 3306:3306
     environment:
